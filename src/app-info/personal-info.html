@@ -1,0 +1,68 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<dom-module id="personal-info">
+    <template>
+        <style include="shared-styles">
+          :host {
+            display: block;
+    
+            padding: 10px;
+          }
+          h4 > a{
+            text-decoration: none;
+          }
+        </style>
+    
+        <div class="card">
+          <div class="circle">
+              <img src="../../image/avator.jpg"/>
+          </div>
+          <h2>编辑个人信息</h2>
+          <form>
+          <h4>姓名：<input type="text" value="[[user.name]]"/ id="username"></h4>
+          <h4>年龄：<input type="text" value="[[user.age]]"/ id="username"></h4>
+          <h4>简介：<input type="text" value="[[user.desc]]"/ id="username"></h4>
+          <!-- <h2>年龄：[[user.age]]</h2>
+          <p>[[user.desc]]</p>
+          <h4 ><a href="/my-view1">个人信息修改</a></h4>
+          <h4 ><a href="/order-detail">我的订单列表</a></h4> -->
+          <input type="submit" value="提交" on-click="addUser"/>
+        </form>
+        </div>
+      </template>
+  <script>
+
+    class PersonalInfo extends Polymer.Element {
+
+        static get is() { return 'personal-info'; }
+
+        static get properties() {
+          return {
+            pageSize: Number,
+
+            user: {
+              type: Object,
+              value: {
+                name: "枫叶",
+                age: 25,
+                desc: "My name is maple"
+              }
+            }
+
+          };
+        }
+        addUser(){
+          const username = this.$.username.value;
+          console.log(username);
+          // this.dispatchEvent(new CustomEvent('add-todo',{detail:{content:content}}));
+          // this.$.todoInput.value = "";
+        }
+
+      }
+
+    window.customElements.define(PersonalInfo.is, PersonalInfo);
+
+  </script>
+</dom-module>

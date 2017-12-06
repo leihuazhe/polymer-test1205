@@ -1,0 +1,213 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<!-- <link rel="import" href="my-icons.html"> -->
+<!--<link rel="import" href="task/task-index.html">-->
+
+<!-- <link rel="lazy-import" href="my-view1.html">
+<link rel="lazy-import" href="my-view2.html">
+<link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="my-view404.html"> -->
+
+<dom-module id="my-app">
+    <template>
+        <style>
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+
+                display: block;
+            }
+
+            app-drawer-layout:not([narrow]) [drawer-toggle] {
+                display: none;
+            }
+
+            app-header {
+                color: #fff;
+                background-color: var(--app-primary-color);
+            }
+
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
+
+            .drawer-list {
+                margin: 0 20px;
+            }
+
+            .drawer-list a {
+                display: block;
+                padding: 0 16px;
+                text-decoration: none;
+                color: var(--app-secondary-color);
+                line-height: 40px;
+            }
+
+            .drawer-list a.iron-selected {
+                color: black;
+                font-weight: bold;
+            }
+        </style>
+
+        <app-location
+                route="{{route}}"
+                url-space-regex="^[[rootPath]]">
+        </app-location>
+
+        <app-route
+                route="{{route}}"
+                pattern="[[rootPath]]:page"
+                data="{{routeData}}"
+                tail="{{subroute}}">
+        </app-route>
+
+        <!-- <app-header class="header" reveals="" snaps="" shadow="" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);">
+            <div class="header-toolbar layout horizontal center" style="transform: translate3d(0px, 0px, 0px);">
+                <paper-icon-button class="drawer-toggle" icon="pw-icons:menu" role="button" tabindex="0" aria-disabled="false"></paper-icon-button>
+                <a href="/" class="logo-link"><img src="/images/logos/p-logo.png" alt="Polymer Logo"> 
+                    <span>Polymer Project</span></a>
+                    <div class="flex"></div><nav><iron-selector class="sections-tabs" attr-for-selected="name" activate-event="">
+                        <a href="/1.0/start/" name="1.0/start" data-version="1.0">开始</a> 
+                        <a href="/1.0/docs/devguide/feature-overview" name="1.0/docs" data-version="1.0">Polymer</a> 
+                        <a href="/1.0/toolbox/" name="1.0/toolbox" data-version="1.0">App 工具箱</a> 
+                        <a href="/2.0/start/" name="2.0/start" data-version="2.0" class="iron-selected">开始</a> 
+                        <a href="/2.0/docs/devguide/feature-overview" name="2.0/docs" data-version="2.0" class="">Polymer</a> 
+                        <a href="/2.0/toolbox/" name="2.0/toolbox" data-version="2.0" class="">App 工具箱</a> 
+                        <a href="/blog/" name="blog" class="">博客</a> 
+                        <a href="/community/" name="community" class="">社区</a>
+                    </iron-selector></nav>
+                    <paper-icon-button icon="pw-icons:search" tabindex="-1" aria-label="Search Polymer site" role="button" aria-disabled="false"></paper-icon-button>
+                </div>
+                <label aria-hidden="" id="searchLabel" hidden="">Search Polymer site</label>
+                <input id="searchBox" type="search" class="search-box fit" placeholder="Search Polymer Site" aria-labelledby="searchLabel">
+        </app-header> -->
+           
+        <!-- <app-header fixed condenses effects="waterfall">
+                <app-toolbar>
+                  <paper-icon-button icon="menu"></paper-icon-button>
+                  <div main-title></div>
+                  <paper-icon-button icon="shopping-cart"></paper-icon-button>
+                </app-toolbar>
+                <app-toolbar></app-toolbar>
+                <app-toolbar>
+                  <div spacer main-title>My App1</div>
+                </app-toolbar>
+              </app-header> -->
+
+        <app-drawer-layout fullbleed narrow="{{narrow}}">
+
+            <!-- Drawer content -->
+            <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+                <app-toolbar>Menu</app-toolbar>
+                <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+                    <a name="task-index" href="[[rootPath]]task-index">polymer 练习</a>
+                    <a name="my-view2" href="[[rootPath]]my-view2">View Two</a>
+                    <a name="my-view3" href="[[rootPath]]my-view3">View Three</a>
+                </iron-selector>
+            </app-drawer>
+
+            <!--  Main content 右侧主窗口  -->
+            <app-header-layout has-scrolling-region>
+
+                <app-header slot="header" condenses reveals effects="waterfall">
+                    <app-toolbar>
+                        <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+                        <div main-title>My App</div>
+                    </app-toolbar>
+                </app-header>
+
+                <iron-pages
+                        selected="[[page]]"
+                        attr-for-selected="name"
+                        fallback-selection="view404"
+                        role="main">
+                    <task-index name="task-index"></task-index>
+                    <my-view2 name="my-view2"></my-view2>
+                    <my-view3 name="my-view3"></my-view3>
+                    <my-view404 name="my-view404"></my-view404>
+                </iron-pages>
+            </app-header-layout>
+        </app-drawer-layout>
+    </template>
+
+    <script>
+        class MyApp extends Polymer.Element {
+            static get is() {
+                return 'my-app';
+            }
+
+            static get properties() {
+                return {
+                    page: {
+                        type: String,
+                        reflectToAttribute: true,
+                        observer: '_pageChanged',
+                    },
+                    routeData: Object,
+                    subroute: String,
+                    // This shouldn't be neccessary, but the Analyzer isn't picking up
+                    // Polymer.Element#rootPath
+                    rootPath: String,
+                };
+            }
+
+            static get observers() {
+                return [
+                    '_routePageChanged(routeData.page)',
+                ];
+            }
+
+            _routePageChanged(page) {
+                // If no page was found in the route data, page will be an empty string.
+                // Default to 'view1' in that case.
+                this.page = page || 'task-index';
+
+                // Close a non-persistent drawer when the page & route are changed.
+                if (!this.$.drawer.persistent) {
+                    this.$.drawer.close();
+                }
+            }
+
+            _pageChanged(page) {
+                // Load page import on demand. Show 404 page if fails
+                let resolvedPageUrl = ''
+                if (page.indexOf('task') >= 0) {
+                    resolvedPageUrl = this.resolveUrl('task/' + page + '.html');
+                } else {
+                    resolvedPageUrl = this.resolveUrl(page + '.html');
+                }
+                Polymer.importHref(
+                    resolvedPageUrl,
+                    null,
+                    this._showPage404.bind(this),
+                    true);
+            }
+
+            _showPage404() {
+                this.page = 'my-view404';
+            }
+        }
+
+        window.customElements.define(MyApp.is, MyApp);
+    </script>
+</dom-module>

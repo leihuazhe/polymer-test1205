@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="order-detail">
+    <template>
+        <style>
+            :host {
+                --app-primary-color: #4285f4;
+                --app-secondary-color: black;
+
+                display: block;
+            }
+
+        </style>
+
+
+
+
+        <h2>Hello [[prop1]]!</h2>
+
+
+    </template>
+
+    <script>
+        /**
+         * @customElement
+         * @polymer
+         */
+        class OrderDetail extends Polymer.Element {
+            static get is() { return 'order-detail'; }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'app-main'
+                    }
+                }
+            };
+        }
+        /*constructor() {
+
+          super();
+
+          this.items = [{
+                item: "个人中心"
+            },{
+                item: "订单中心"
+            }];
+
+
+          }*/
+
+
+
+
+
+
+
+        window.customElements.define(AppMain.is, AppMain);
+    </script>
+</dom-module>

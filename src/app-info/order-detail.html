@@ -1,0 +1,127 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="./order-info.html">
+<dom-module id="order-detail">
+  <template strip-whitespace>
+    <style>
+      :host {
+        display: block;
+      }
+    
+      .am-table{
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .am-table th {
+        width: 200px;
+        border-bottom: none;
+        border-left: none;
+        border-right: 1px solid #CCC;
+        border-top: 1px solid #DDD;
+        word-break: keep-all;
+        white-space: nowrap;
+        font-size: 25px;
+        margin-bottom: 10px;
+      }
+    
+      .am-table tr {
+        border-left: 1px solid #EB8;
+        border-bottom: 1px solid #B74;
+      }
+    </style>
+
+<table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped am-table-hover">
+  <thead>
+    <tr class="am-success">
+
+      <th class="table-id" width="20%">ID</th>
+      <th class="table-title" width="20%">商品名称</th>
+      <th class="table-type" width="20%">购买数量</th>
+      <th class="table-author am-hide-sm-only" width="20%">购买人</th>
+      <th width="130px" class="table-set" width="20%">购买金额</th>
+
+    </tr>
+  </thead>
+</table> 
+      
+      <!-- <template is="dom-repeat" items="{{todos}}">
+          <to-do todo="[[item]]"></to-do>
+      </template> -->
+
+
+
+
+      <template is="dom-repeat" items="{{items}}">
+          <order-info item="[[item]]"></order-info>
+      </template>
+
+
+
+
+       <!-- <dom-repeat items="[[items]]">
+            <order-info item="[[item]]">1</order-info>
+        </dom-repeat>  -->
+     <!-- </tr> -->
+
+    
+  <!-- </tbody> -->
+
+  </template>
+  <script>
+  (function() {
+
+    class OrderDetail extends Polymer.Element {
+
+      static get is() { return 'order-detail'; }
+
+      static get properties() {
+        return {
+          pageSize: Number,
+        };
+      }
+
+     
+      
+      constructor() {
+        super();
+
+        this.items = [{
+          id: 1,
+          name: "商品1",
+          count:5,
+          buyer:"zhangsan",
+          price:25.5
+        }, {
+          id: 2,
+          name: "商品2",
+          count:4,
+          buyer:"zhangsan",
+          price:25.5
+        },{
+          id: 3,
+          name: "商品3",
+          count:5,
+          buyer:"zhangsan",
+          price: 25.5
+          }];
+        // console.log(items);
+        this.todos = [{
+          content: "去浪啊",
+          isComplete: false
+        }, {
+          content: "去浪啊2",
+          isComplete: false
+        }];
+      }
+
+      
+    }
+    
+
+
+    window.customElements.define(OrderDetail.is, OrderDetail);
+
+  })();
+  </script>
+</dom-module>

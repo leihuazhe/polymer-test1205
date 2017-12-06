@@ -1,0 +1,230 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+
+
+<!-- <link rel="import" href="./test-list.html"> -->
+<link rel="import" href="./my-view1.html">
+
+<link rel="import" href="../app-info/order-detail.html">
+
+
+<link rel="import" href="../app-info/personal-view.html">
+
+<link rel="import" href="../app-info/personal-info.html">
+
+
+
+<dom-module id="test-app">
+    <template>
+        <style>
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Noto", sans-serif;
+            min-height: 100vh;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0;
+          }
+        
+          nav {
+            background-color: #283593;
+            height: 54px;
+            padding: 16px 0 16px 1em;
+            box-sizing: border-box;
+            white-space: nowrap;
+            /* margin: 0 auto; */
+            text-align: center;
+          }
+        
+          nav a {
+            color: white;
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 300;
+            letter-spacing: .075em;
+            margin-right: 0.5em;
+            text-decoration: none;
+          }
+        
+          .logo {
+            height: 24px;
+            width: 24px;
+            vertical-align: middle;
+            fill: white;
+          }
+        
+          @keyframes pulse {
+            0% {
+              transform: scale(1);
+              opacity: 0;
+            }
+            50% {
+              transform: scale(1.2);
+              opacity: 1;
+            }
+          }
+        
+          .loading {
+            text-align: center;
+          }
+        
+          .loading>* {
+            animation: pulse 1s infinite ease-in-out;
+            will-change: opacity, transform;
+            display: inline-block;
+            padding: 64px;
+          }
+        
+          .hn-top .top,
+          .hn-new .new,
+          .hn-ask .ask,
+          .hn-show .show,
+          .hn-jobs .jobs {
+            color: #f5d328;
+          }
+        </style>
+        
+        <app-location
+                    route="{{route}}"
+                    url-space-regex="^[[rootPath]]">
+        </app-location>
+
+
+        <app-route
+                    route="{{route}}"
+                    pattern="[[rootPath]]:page"
+                    data="{{routeData}}"
+                    tail="{{subroute}}">
+       </app-route>
+        
+
+      
+
+      <nav>
+        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+          <!-- <a href="https://www.polymer-project.org" target="_blank" rel="noopener" title="Polymer Logo">
+            <svg class="logo" viewBox="0 0 24 24">
+              <path d="M19 4h-4L7.11 16.63 4.5 12 9 4H5L.5 12 5 20h4l7.89-12.63L19.5 12 15 20h4l4.5-8z" />
+            </svg>
+          </a> -->
+          <a class="top" href="[[rootPath]]personal-view">个人中心</a>
+          <a class="new" href="[[rootPath]]personal-info">个人信息</a>
+          <a class="ask" href="[[rootPath]]order-detail">订单中心</a>
+          <a class="show" href="http://www.itjava.top">About Me</a>
+          <a class="jobs" href="[[rootPath]]my-view1">Test</a>
+        </iron-selector>
+      </nav>
+
+
+
+        <!-- <slot></slot> -->
+
+        <div id="views">
+      
+
+            <iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
+              <!-- <task-index name="task-index"></task-index> -->
+              <my-view1 name="my-view1"></my-view1>
+              <order-detail name="order-detail"></order-detail>
+              <personal-view name="personal-view"></personal-view>
+              <personal-info name="personal-info"></personal-info>
+              <!-- <my-view3 name="my-view3"></my-view3> -->
+              <my-view404 name="my-view404"></my-view404>
+            </iron-pages>
+
+          <!-- <test-list
+            class$="[[_viewClass('list', _view, _loading)]]"
+            list="[[_listData]]"
+            type="[[_listType]]"
+            page="[[_listPage]]"
+            page-size="30">
+          </test-list> -->
+
+        </div>
+    </template>
+
+    <script>
+      class TestApp extends Polymer.Element {
+          static get is() {
+          return 'test-app';
+        }
+
+        static get properties() {
+          return {
+            page: {
+              type: String,
+              reflectToAttribute: true,
+              observer: '_pageChanged',
+            },
+            routeData: Object,
+            subroute: String,
+            // This shouldn't be neccessary, but the Analyzer isn't picking up
+            // Polymer.Element#rootPath
+            rootPath: String,
+          };
+        }
+
+          static get observers() {
+            return [
+            '_routePageChanged(routeData.page)'
+            ]
+          }
+
+          _routePageChanged(page) {
+           
+            // console.log('_routePageChanged-->  '+page);
+
+            this.page = page ;
+            
+            // if (!this.$.drawer.persistent) {
+            //     this.$.drawer.close();
+            // }
+        }
+          
+
+        _pageChanged(page) {
+          // console.log('_pageChanged---> '+page);
+          // Load page import on demand. Show 404 page if fails
+          let resolvedPageUrl = ''
+          if (page.indexOf('task') >= 0) {
+            resolvedPageUrl = this.resolveUrl('task/' + page + '.html');
+          } else if(page.indexOf('order') >= 0||page.indexOf('personal') >= 0) {
+            resolvedPageUrl = this.resolveUrl('../app-info/' + page + '.html');
+          // }else if(page="/"){
+          //   resolvedPageUrl = this.resolveUrl('../app-info/' + 'personal-view' + '.html');
+          
+          }else {
+            resolvedPageUrl = this.resolveUrl(page + '.html');
+
+            // console.log('_pageChanged-resolveUrl--> '+page);
+          }
+          Polymer.importHref(
+            resolvedPageUrl,
+            null,
+            this._showPage404.bind(this),
+            true);
+        }
+        _showPage404() {
+                this.page = 'my-view404';
+            } 
+
+        }
+
+        window.customElements.define(TestApp.is, TestApp);
+    </script>
+</dom-module>

@@ -1,0 +1,90 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.css" rel="stylesheet">
+<dom-module id="order-info">
+  <template strip-whitespace>
+    <style>
+      
+      :host {
+        display: block;
+      }
+      .order-info > p{
+        height:100px;
+        /* margin: 0 0; */
+        text-align: center;
+         margin-left: 10em; 
+         
+      }
+
+      .order-info > p > span{
+       font-size: 2em;
+       font-family: '微软雅黑';
+       color: slategrey;
+         
+      }
+      .table {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+
+        width: 100%;
+        height: 50px;
+      }
+      .table  tr   td{
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #666666;
+        background-color: #FFFAFA;
+        text-align: center;
+        
+      }
+
+      .table th {
+        width: 200px;
+        border-bottom: none;
+        border-left: none;
+        border-right: 1px solid #CCC;
+        border-top: 1px solid #DDD;
+        word-break: keep-all;
+        white-space: nowrap;
+      }
+
+    </style>
+
+      <table class="table table table-striped">
+          <tr>
+            <td width="20%">[[item.id]]</td>
+            <td width="20%">[[item.name]]</td>
+            <td width="20%">[[item.count]]</td>
+            <td width="20%">[[item.buyer]]</td>
+            <td width="20%">[[item.price]]</td>
+          </tr>
+      </table>
+  </template>
+  <script>
+  // (function() {
+
+    class OrderInfo extends Polymer.Element {
+
+      static get is() { return 'order-info'; }
+
+      
+
+
+      static get properties() { return {
+
+        item: Object
+
+      }}
+    }
+
+    window.customElements.define(OrderInfo.is, OrderInfo);
+
+  // })();
+  </script>
+</dom-module>

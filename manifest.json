@@ -1,0 +1,7 @@
+{
+  "name": "maple",
+  "short_name": "maple",
+  "description": "app-main-test",
+  "start_url": "/",
+  "display": "standalone"
+}

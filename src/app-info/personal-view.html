@@ -1,0 +1,94 @@
+
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+
+<dom-module id="personal-view">
+    <template>
+        <style include="shared-styles">
+          :host {
+            display: block;
+    
+            padding: 10px;
+          }
+          h4 > a{
+            text-decoration: none;
+          }
+          h4 > a{ 
+            color:#00BFFF; 
+            text-decoration:none
+            }/* 链接默认为红色 */ 
+          
+          h4 > a:hover{
+             color:#000; text-decoration:none
+             }/* 鼠标悬停黑色 */ 
+        </style>
+    
+        <div class="card">
+          <div class="circle">
+              <img src="../../image/avator.jpg"/>
+          </div>
+          <h1><span id="username">[[user.name]]</span></h1>
+          <h2>年龄：[[user.age]]</h2>
+          <p>[[user.desc]]</p>
+          <!-- <h4 ><a on-click="_update">个人信息修改click</a></h4> -->
+          <h4 ><a href="/personal-info">个人信息修改</a></h4>
+          <h4 ><a href="/order-detail">我的订单列表</a></h4>
+        </div>
+      </template>
+  <script>
+
+    class PersonalView extends Polymer.Element {
+
+      static get is() { return 'personal-view'; }
+
+      static get properties() {
+        return {
+          pageSize: Number,
+
+          user: {
+            type: Object,
+            value: {
+              name: "枫叶",
+              age: 25,
+              desc: "My name is maple"
+            }
+          }
+          // user:{
+          //   name: {
+          //     type: String,
+          //     value: '枫叶'
+          //   },
+          //   age: {
+          //     type: String,
+          //     value: '年龄：25'
+          //   }, 
+          //   desc: {
+          //     type: String,
+          //     value: 'My name is maple枫叶'
+          //   }
+          // }
+        };
+      }
+
+      _update(){
+        const username = this.$.username.value;
+        console.log(username); 
+        this.dispatchEvent(new CustomEvent('update', {detail: {name: username}}));
+      
+        window.location.href="/personal-info";
+      }
+
+
+    }
+
+    window.customElements.define(PersonalView.is, PersonalView);
+
+  </script>
+
+<!-- <script>
+    document.querySelector('personal-view').addEventListener('update', function (e) {
+        console.log(e.detail.name); // true
+    })
+
+</script> -->
+</dom-module>
