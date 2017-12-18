@@ -1,0 +1,122 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+
+<link rel="import" href="./my-page1.html">
+<link rel="import" href="./my-page2.html">
+<link rel="import" href="./my-page3.html">
+
+<dom-module id="test-route">
+  <template>
+
+    <app-location
+        route="{{route}}"
+        url-space-regex="^[[rootPath]]">
+    </app-location>
+    
+    <app-route route="{{route}}" pattern="/:view" data="{{routeData}}">
+    </app-route>
+
+
+    <style>
+      ul.nav{
+        list-style: none;
+        background: #e4e7ea;
+      }
+      ul.nav  li{
+        display: inline-block;
+        width: 80px;
+        height:30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 5px;
+        padding:5px;
+        cursor: pointer;
+      }
+      ul.nav li.active{
+        background: #1f1d1d;
+      }
+      ul.nav li.active a {
+        color: #fff;
+      }
+      ul.nav li a{
+        text-decoration: none;
+        color: #555;
+      }
+    </style>
+    <ul class="nav nav-tabs" on-click="tabChange">
+      <template is="dom-repeat" id="tabs" items="{{tabs}}">
+        <li>
+          <a href="#">{{item.title}}</a>
+        </li>
+      </template>
+    </ul>
+
+    <div class="content">
+        <iron-pages
+            selected="[[view]]"
+            attr-for-selected="name">
+
+            <my-page1 name="page1"></my-page1>
+            <my-page2 name="page2"></my-page2>
+            <my-page3 name="page3"></my-page3>
+    </div>
+
+  </template>
+
+  <script>
+    class TestRoute extends Polymer.Element {
+            constructor() {
+                super();
+            }
+            static get is() { return 'test-route'; }
+            static get properties() {
+                return {
+                    //   加入 view 属性     属性是自己进行定义的
+                    view: {
+                        type: String,
+                        value: 'page2', //初始页面
+                    },
+
+                    tabs: {
+                        type: Array,
+                        value: [{
+                            title: "内容1",
+                            target:"page1"      
+                        }, {
+                            title: "内容2",
+                            target:"page2"
+                        }, {
+                            title: "内容3",
+                            target:"page3"
+                        }]
+                    }
+
+                }
+
+
+            }
+            // 观察者
+            static get observers() {
+                return [
+                    '_routeDateChanged(rooteData.view)'
+                ]
+            }
+
+            _routeDataChanged(view) {
+                this.view = view || 'page1';    //这里监听 view
+            }
+
+            tabChange(e) {
+                let item = this.$.tabs.itemForElement(e.target);
+                this.view = item.target;        //view 属性双向绑定
+            }
+
+        }
+
+    window.customElements.define(TestRoute.is, TestRoute);
+  </script>
+</dom-module>
