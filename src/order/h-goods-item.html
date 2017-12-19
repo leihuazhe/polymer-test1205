@@ -1,0 +1,35 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="h-goods-item">
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 4px;
+                background-color: gray;
+                --goods-status-default-color: yellow;
+                --order-price-default-color: red;
+                @apply --goods-item-theme;
+            }
+
+            .order-status {
+                color: var(--goods-item-status-color, var(--goods-status-default-color));
+            }
+
+            .order-price {
+                color: var(--goods-item-price-color, var(--order-price-default-color));
+            }
+
+        </style>
+        <div>
+            <span>[[goodsItem.name]]</span>
+            <span class="order-status">{{goodsItem.status}}</span>
+            <span id="address">[[goodsItem.address]]</span><input type="button" value="address" on-click="addressClick">
+            <span id="quantity">{{goodsItem.quantity}}</span><input type="button" value="quantity" on-click="quantityClick">
+            <input class="order-price"  value="{{goodsItem.price::input}}" >
+            <input type="button" value="点击" on-click="itemClick">
+        </div>
+    </template>
+    <script type="text/javascript" src="js/h-goods-item.js"></script>
+</dom-module>

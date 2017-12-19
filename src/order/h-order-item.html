@@ -1,0 +1,55 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="h-goods-item.html">
+<link rel="import" href="../../bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="/bower_components/shadycss/apply-shim.html">
+<dom-module id="h-order-item">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            .no-pay-status {
+                --goods-item-status-color: red;
+                --goods-item-theme: {
+                    background-color: white;
+                }
+            }
+            .success-status {
+                --goods-item-status-color: white;
+                --goods-item-theme: {
+                    background-color: aqua;
+                }
+            }
+            .summary-information-text {
+                color: pink;
+            }
+        </style>
+        <div>
+            <div>
+                <p>1. 修改价格汇总信息会改变</p>
+                <p>2. 定义了自定义(confirm)事件通过点击按钮触发</p>
+                <p>3. 参数传递</p>
+            </div>
+            <div>
+                <span class="summary-information-text">汇总信息></span>
+                <span>总金额:{{summaryInformation.totalAmount}} ¥</span>
+                <span>未付款金额:{{summaryInformation.noPayAmount}} ¥</span>
+                <span>已付款金额:{{summaryInformation.payAmount}} ¥</span>
+            </div>
+            <div>
+                <span>商品名</span>
+                <span>状态</span>
+                <span>产地</span>
+                <span>数量</span>
+                <span>价格</span>
+            </div>
+            <div>
+                <template is="dom-repeat" items="{{goodsList}}" as="goods">
+                    <h-goods-item class$="[[getGoodsItemClass(goods)]]"  goods-item="{{goods}}" on-confirm="onConfirm"></h-goods-item>
+                </template>
+            </div>
+        </div>
+    </template>
+    <script type="text/javascript" src="js/h-order-item.js"></script>
+</dom-module>

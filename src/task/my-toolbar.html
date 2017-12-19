@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/shadycss/apply-shim.html">
+
+<dom-module id="my-toolbar">
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 4px;
+                background-color: gray;
+                --my-default-color: yellow;
+                @apply --my-toolbar-theme;
+            }
+            .title {
+                color: var(--my-toolbar-title-color, var(--my-default-color));
+            }
+            .content {
+                @apply --my-toolbar-content-theme;
+            }
+        </style>
+        <div>
+            <span class="title">{{titleName}}</span><br>
+            <span class="content">Content</span>
+        </div>
+
+    </template>
+    <script>
+        class MyToolbar extends Polymer.Element {
+            static get is() {
+                return "my-toolbar";
+            }
+            static get properties() {
+                return {
+                    titleName: {
+                        type: String,
+                        value: 'AASSS'
+                    }
+                }
+            }
+
+        }
+        customElements.define(MyToolbar.is, MyToolbar);
+    </script>
+</dom-module>
